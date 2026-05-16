@@ -1,0 +1,135 @@
+# PROJECT HANDOFF — Close a Project Session for Another Agent or Developer
+
+## RULE: No code changes. Documentation and state capture only.
+
+Use this when leaving a project so the next agent (or developer) can pick up with zero ambiguity. Output is an updated `md_docs/` and a handoff summary.
+
+---
+
+## Phase 1 — Capture Current State
+
+### 1.1 Git state
+```bash
+git status
+git log --oneline -20
+git branch -a
+git stash list
+git diff --stat HEAD
+```
+
+### 1.2 Open tasks
+```bash
+ls -lt md_docs/tasks/ | head -20
+```
+Read every task file whose status is "In progress" or "Blocked".
+
+### 1.3 Uncommitted or unpushed work
+```bash
+git diff --name-only
+git diff --cached --name-only
+git log origin/$(git branch --show-current)..HEAD --oneline 2>/dev/null || true
+```
+
+Document everything found. Nothing should be hidden from the next agent.
+
+---
+
+## Phase 2 — Update md_docs/
+
+### 2.1 AGENT_CONTEXT.md
+Read `md_docs/AGENT_CONTEXT.md`. For every section, verify it reflects the current state of the codebase:
+
+- Tech stack: any new dependencies or version changes?
+- Architecture: any structural changes made during this work?
+- Data flow: any new ingestion paths, transformations, or outputs?
+- Module map: any new modules or changed boundaries?
+- Configuration & environment: any new or removed env vars?
+- External integrations: any new third-party services?
+- Known constraints & gotchas: anything discovered that should be recorded?
+
+Update every section that is stale. Mark sections you cannot verify as `[Unverified as of YYYY-MM-DD]`.
+
+### 2.2 Architecture docs
+For each file in `md_docs/architecture/`, verify and update if stale:
+- `data_flow.md` — if data paths changed.
+- `key_patterns.md` — if new patterns emerged or anti-patterns were found.
+- `module_map.md` — if module structure changed.
+- `infrastructure.md` — if env vars, cloud resources, or local setup changed.
+
+### 2.3 Task files
+For every "In progress" task:
+- Write the current state precisely in the **Progress Log**.
+- List every file modified so far under **Files Modified**.
+- Write every unresolved question under **Blockers**.
+- Set status to "Blocked" if work cannot continue without human input.
+
+---
+
+## Phase 3 — Write Handoff Summary
+
+Create or update `md_docs/HANDOFF.md`:
+
+```markdown
+# Handoff — [project name]
+
+**Date**: YYYY-MM-DD
+**Handing off from**: [agent or developer name / session ID]
+**Next action owner**: [if known]
+
+## Current State
+[1–2 paragraphs: what is the state of the project right now. What was just done. What is not done.]
+
+## Active Tasks
+| Task file | Status | Blocked on |
+|-----------|--------|------------|
+| `md_docs/tasks/YYYY-MM-DD_x.md` | In progress | [or "nothing"] |
+
+## Git State
+- Branch: [branch name]
+- Uncommitted changes: [yes/no — list files if yes]
+- Unpushed commits: [yes/no — list if yes]
+- Open PRs: [link or "none"]
+
+## Immediate Next Steps
+1. [Concrete first action the next agent should take.]
+2. [Second action.]
+3. [...]
+
+## Known Blockers
+| Blocker | Impact | Who can resolve |
+|---------|--------|-----------------|
+| [description] | high/med/low | [human / other system / unknown] |
+
+## Context Gaps
+[Things the next agent will need to know that are NOT documented in md_docs/. Be explicit.]
+
+## Decisions Pending
+[Any architectural or implementation decisions left unmade. Include relevant context.]
+
+## Do Not Touch
+[Files, systems, or areas that should not be modified until a specific condition is met.]
+
+## Warnings
+[Non-obvious things that could cause problems. Things discovered that surprised you.]
+```
+
+---
+
+## Phase 4 — Verify Handoff Completeness
+
+- [ ] `md_docs/AGENT_CONTEXT.md` is up to date (no stale sections).
+- [ ] All in-progress task files have current progress logs.
+- [ ] `HANDOFF.md` exists and has no empty required sections.
+- [ ] Git state is documented (uncommitted changes, unpushed commits).
+- [ ] All blockers are surfaced — none hidden.
+- [ ] "Immediate Next Steps" are concrete and actionable (not vague).
+- [ ] No secrets or credentials left in any file.
+
+---
+
+## Rules
+- Document what IS, not what SHOULD BE.
+- If something is unknown, write "Unknown — needs investigation" rather than guessing.
+- A handoff with documented unknowns is better than a handoff with hidden gaps.
+- If you cannot update a section of AGENT_CONTEXT.md without reading code: read the code.
+- Write all documentation in English.
