@@ -1,0 +1,14 @@
+{
+  "name": "dev-workflows",
+  "version": "1.0.0",
+  "description": "Agent workflow prompts for project bootstrapping, session management, and task lifecycle.",
+  "author": {
+    "name": "fnhernandorena",
+    "url": "https://github.com/fnhernandorena"
+  },
+  "homepage": "https://github.com/fnhernandorena/agents_prompts",
+  "repository": "https://github.com/fnhernandorena/agents_prompts",
+  "license": "MIT",
+  "keywords": ["workflows", "projects", "tasks", "agents", "documentation", "bootstrap"],
+  "skills": "./skills/"
+}

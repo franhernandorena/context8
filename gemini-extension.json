@@ -1,0 +1,6 @@
+{
+  "name": "dev-workflows",
+  "description": "Agent workflow prompts for project bootstrapping, session management, and task lifecycle.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

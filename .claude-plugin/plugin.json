@@ -1,0 +1,35 @@
+{
+  "name": "dev-workflows",
+  "description": "Agent workflow prompts for project bootstrapping, session management, and task lifecycle. Works with any codebase.",
+  "version": "1.0.0",
+  "author": {
+    "name": "fnhernandorena"
+  },
+  "homepage": "https://github.com/fnhernandorena/agents_prompts",
+  "repository": "https://github.com/fnhernandorena/agents_prompts",
+  "license": "MIT",
+  "keywords": [
+    "workflows",
+    "projects",
+    "tasks",
+    "agents",
+    "documentation",
+    "bootstrap",
+    "session",
+    "hotfix"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dev Workflows",
+    "shortDescription": "Project bootstrap, session management, and task lifecycle workflows for coding agents",
+    "longDescription": "Structured prompts for every stage of development: initialize a project or workspace, continue a session, plan and execute tasks, review code, ship hotfixes, audit a codebase, and hand off work cleanly.",
+    "developerName": "fnhernandorena",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "defaultPrompt": [
+      "I need to start working on a new codebase.",
+      "I want to resume work on an existing project."
+    ],
+    "websiteURL": "https://github.com/fnhernandorena/agents_prompts"
+  }
+}

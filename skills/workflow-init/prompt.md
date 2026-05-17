@@ -1,0 +1,296 @@
+# WORKSPACE BOOTSTRAP — Multi-Repo Parent Folder
+
+## RULE: No code changes before this setup is complete. Run every phase in order.
+
+A workspace is a parent folder containing multiple independent repositories (e.g., `proyecto_a/` holding `front_a/` and `back_a/`). This prompt bootstraps:
+- A **root `md_docs/`**: workspace-level guide, global tasks, cross-repo overview only.
+- A **per-repo `md_docs/`**: full independent context for each child repo.
+
+---
+
+## Phase 1 — Discover Workspace Structure
+
+### 1.1 Map the workspace
+```bash
+find . -maxdepth 3 -not -path '*/.git/*' -not -path '*/node_modules/*' \
+       -not -path '*/__pycache__/*' -not -path '*/.venv/*' \
+       | sort | head -80
+```
+
+### 1.2 Identify child repos
+```bash
+find . -maxdepth 2 -name ".git" -type d | sed 's|/.git||' | sort
+```
+List every directory that is an independent git repo. These are your **child repos**.
+
+### 1.3 Check for existing documentation
+```bash
+find . -name "md_docs" -type d | sort
+find . -name "*.md" -maxdepth 2 | sort
+```
+
+### 1.4 Check for workspace-level config
+Read any files present at the root:
+- `docker-compose*.yml` / `Makefile` / `justfile` / `taskfile.yml`
+- `.env.example` / `.env.template` (NEVER `.env` itself)
+- Any root `README.md`
+
+---
+
+## Phase 2 — Create Root `md_docs/`
+
+The root `md_docs/` is a **navigation layer only**. It does NOT duplicate per-repo content.
+
+```
+md_docs/
+├── README.md                  # Workspace index — links to all child repos
+├── WORKSPACE_OVERVIEW.md      # What this workspace is, who uses it, global architecture
+└── tasks/
+    └── (global / cross-repo task files go here)
+```
+
+### md_docs/README.md
+```markdown
+# Workspace: [workspace name]
+
+## Repos in this workspace
+
+| Repo | Path | Purpose | Full docs |
+|------|------|---------|-----------|
+| [name] | ./[path] | [one-line purpose] | [path/md_docs/README.md] |
+
+## How to use this workspace
+- For work on a specific repo: navigate to its folder and read `md_docs/AGENT_CONTEXT.md`.
+- For cross-repo tasks: read `WORKSPACE_OVERVIEW.md` and check `tasks/` here.
+- To bootstrap a new session on a child repo: use `project-continue` skill inside that repo's folder.
+
+## Global tasks
+See `tasks/` in this directory for cross-repo or workspace-level work.
+```
+
+### md_docs/WORKSPACE_OVERVIEW.md
+Must include:
+```markdown
+# Workspace Overview
+
+## Purpose
+[What this workspace represents — product, platform, or project it belongs to]
+
+## Repos
+
+| Repo | Stack | Role | Key contacts |
+|------|-------|------|-------------|
+| [name] | [tech] | [frontend/backend/infra/etc] | [if known] |
+
+## Cross-repo Relationships
+[How the repos interact: API contracts, shared databases, event queues, shared packages]
+
+## Shared Infrastructure
+[Docker compose, shared envs, shared CI/CD, monorepo tooling if any]
+
+## Global Conventions
+[Naming, branching strategy, PR process, deploy process — things that apply to all repos]
+
+## Known Cross-repo Constraints & Gotchas
+[Non-obvious things that affect multiple repos simultaneously]
+```
+
+---
+
+## Phase 3 — Bootstrap Each Child Repo
+
+For **each child repo** discovered in Phase 1, run the full per-repo bootstrap independently.
+
+### 3.1 Navigate to repo
+Work from inside the child repo directory for this phase.
+
+### 3.2 Run full codebase exploration (per repo)
+
+#### Directory structure
+```bash
+find . -not -path '*/node_modules/*' -not -path '*/.git/*' \
+       -not -path '*/__pycache__/*' -not -path '*/.venv/*' \
+       -not -path '*/dist/*' -not -path '*/build/*' \
+       | sort | head -120
+```
+
+#### Root configuration files
+Read every config file present:
+- package.json / package-lock.json / yarn.lock / pnpm-lock.yaml
+- pyproject.toml / setup.py / requirements*.txt / Pipfile
+- dbt_project.yml / profiles.yml
+- Cargo.toml / go.mod / build.gradle / pom.xml
+- tsconfig.json / .eslintrc* / .prettierrc* / ruff.toml / .flake8
+- docker-compose*.yml / Dockerfile*
+- .env.example / .env.template (NEVER .env itself)
+- Makefile / justfile / taskfile.yml
+
+#### Git history
+```bash
+git log --oneline -30
+git branch -a
+git remote -v
+```
+
+#### CI/CD pipelines
+Read every file in:
+- .github/workflows/
+- .gitlab-ci.yml / cloudbuild.yaml / .circleci/config.yml
+
+#### Existing documentation
+```bash
+find . -name "*.md" -not -path '*/node_modules/*' | sort
+```
+Read every .md file found.
+
+#### Test suite
+```bash
+find . \( -name "test_*.py" -o -name "*_test.py" -o -name "*.test.ts" \
+          -o -name "*.spec.ts" -o -name "*.test.tsx" -o -name "jest.config*" \
+          -o -name "pytest.ini" -o -name "vitest.config*" \) \
+     -not -path '*/node_modules/*' | sort | head -40
+```
+
+#### Entry points & main modules
+Identify and read:
+- Main app entry (main.py / app.py / index.ts / server.ts / main.rs / cmd/)
+- Router definitions
+- Core models / schemas / types
+- Database migrations directory
+
+#### Infrastructure & cloud
+Read any IaC files: terraform/ / pulumi/ / cdk/ / serverless.yml / kubernetes/ / k8s/
+
+### 3.3 Create per-repo `md_docs/`
+
+Inside the child repo, create:
+```
+[repo]/md_docs/
+├── README.md                     # Index + quick-start for agents
+├── AGENT_CONTEXT.md              # Comprehensive repo context
+├── AGENT_SYSTEM_PROMPT.md        # System prompt for new agent instantiation
+├── PROJECT_OVERVIEW.md           # 1-page high-level summary
+├── architecture/
+│   ├── data_flow.md
+│   ├── key_patterns.md
+│   ├── module_map.md
+│   └── infrastructure.md
+└── tasks/
+    └── (task files go here)
+```
+
+### 3.4 Populate AGENT_CONTEXT.md (per repo)
+
+Must include ALL sections. Be exhaustive — a future agent must not need to re-read source code.
+
+```markdown
+# Agent Context — [repo name]
+
+## Tech Stack
+[Languages, runtime versions, key frameworks, databases, cloud services]
+
+## Architecture
+[Pattern name + brief description. ASCII or mermaid diagram if helpful.]
+
+## Directory Structure (annotated)
+[Top-level dirs with one-line purpose each]
+
+## Entry Points
+[How the app starts, main files, CLI commands]
+
+## Data Flow
+[How data moves: inputs → processing → outputs]
+
+## Key Modules & Their Responsibilities
+[Table: module → what it does → key files]
+
+## Core Design Patterns & Conventions
+[Naming, error handling, logging, validation, testing patterns]
+
+## Configuration & Environment
+[All env vars, their purpose, example values. No secret values.]
+
+## Database & Schema
+[Tables/collections, key relationships, migration tool]
+
+## External Integrations & APIs
+[Third-party services, internal APIs, contracts with other repos in this workspace]
+
+## Testing Strategy
+[Frameworks, how to run tests, what's covered]
+
+## CI/CD Pipeline
+[Stages, triggers, deployment targets]
+
+## Known Constraints & Gotchas
+[Non-obvious limitations, tech debt, things to be careful about]
+
+## Workspace Relationships
+[How this repo connects to others in the workspace: API calls, shared DB, events, packages]
+```
+
+### 3.5 Populate AGENT_SYSTEM_PROMPT.md (per repo)
+
+Ready-to-paste system prompt:
+- Project in 2–3 sentences
+- Tech stack
+- Primary workflow: use `project-continue` skill → read `AGENT_CONTEXT.md` → check `tasks/`
+- Top 3–5 conventions to follow strictly
+- What NOT to do (common mistakes for this codebase)
+- Reference to workspace: "This repo is part of workspace `[name]`. Cross-repo context: `../../md_docs/WORKSPACE_OVERVIEW.md`"
+
+### 3.6 Populate remaining docs (per repo)
+
+**PROJECT_OVERVIEW.md**: 1-page — what it does, who uses it, key architectural decisions, current state, next priorities.
+
+**architecture/data_flow.md**: Full lifecycle of a request from entry to exit.
+
+**architecture/key_patterns.md**: Naming conventions, module boundary rules, error propagation, logging, how to add new features, anti-patterns.
+
+**architecture/module_map.md**: ASCII or mermaid map of main modules and dependencies.
+
+**architecture/infrastructure.md**: Cloud services, env vars (name + purpose + example, no real secrets), container setup, how to run locally, how to deploy.
+
+### 3.7 Update repo README.md
+
+Add or update:
+```markdown
+## Agent Documentation
+
+This repo is part of the **[workspace name]** workspace.
+See [`md_docs/README.md`](md_docs/README.md) for the full agent documentation index.
+For cross-repo context: [`../../md_docs/WORKSPACE_OVERVIEW.md`](../../md_docs/WORKSPACE_OVERVIEW.md)
+```
+
+---
+
+## Phase 4 — Finalize Root `md_docs/`
+
+After all child repos are bootstrapped, update the root `md_docs/README.md`:
+- Fill in the repo table with correct paths, purposes, and links.
+- Note any cross-repo relationships discovered during Phase 3.
+- Update WORKSPACE_OVERVIEW.md with any concrete details found (shared infra, API contracts, etc.)
+
+---
+
+## Completion Checklist
+
+- [ ] All child repos identified in Phase 1
+- [ ] Root `md_docs/` created with README and WORKSPACE_OVERVIEW
+- [ ] Each child repo has a complete `md_docs/` with all required files
+- [ ] AGENT_CONTEXT.md for each repo has all sections (no placeholder text)
+- [ ] AGENT_SYSTEM_PROMPT.md for each repo is ready to paste
+- [ ] Each repo's README.md references its `md_docs/` and the root `md_docs/`
+- [ ] Root README.md (or WORKSPACE_OVERVIEW.md) links all repos
+- [ ] All documentation written in English
+- [ ] No secrets or .env values written to any file
+
+---
+
+## Rules
+- Root `md_docs/` = navigation + global context only. Never duplicate per-repo content there.
+- Per-repo `md_docs/` = fully self-contained. Agent working on one repo must not need to read another repo's files.
+- Document what exists, not what should exist.
+- If a section has no content, write: "None currently. [Reason if known]."
+- Never truncate or skip a Phase 3 step because a repo "looks simple."
+- If MCP tools are available (GitHub, Linear, Jira), check for existing issues and reference them.
