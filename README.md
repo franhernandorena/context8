@@ -34,7 +34,7 @@ Requires [uv](https://docs.astral.sh/uv/). Supports Claude Code, Codex, Cursor, 
 
 | Skill | Invoke | When to use |
 |-------|--------|-------------|
-| `project-init` | `/dev-workflows:project-init` | First time an agent works in a repo — builds `md_docs/` |
+| `project-init` | `/dev-workflows:project-init` | First time an agent works in a repo — builds `.context8/` |
 | `project-continue` | `/dev-workflows:project-continue` | Start of every session in a documented repo |
 | `project-handoff` | `/dev-workflows:project-handoff` | End a session cleanly for the next agent |
 | `project-audit` | `/dev-workflows:project-audit` | Assess a repo with no or stale documentation |
@@ -47,6 +47,19 @@ Requires [uv](https://docs.astral.sh/uv/). Supports Claude Code, Codex, Cursor, 
 | `task-do` | `/dev-workflows:task-do` | Execute a planned task step by step |
 | `task-review` | `/dev-workflows:task-review` | Pre-PR review: correctness, security, tests, regressions |
 | `task-hotfix` | `/dev-workflows:task-hotfix` | Urgent production fix with controlled speed |
+
+### Agent Generators
+
+| Skill | Invoke | When to use |
+|-------|--------|-------------|
+| `create-qa-agent` | `/dev-workflows:create-qa-agent` | Need a specialized QA/testing agent prompt |
+| `create-architect-agent` | `/dev-workflows:create-architect-agent` | Need a software architect agent prompt |
+| `create-backend-agent` | `/dev-workflows:create-backend-agent` | Need a backend development agent prompt |
+| `create-frontend-agent` | `/dev-workflows:create-frontend-agent` | Need a frontend development agent prompt |
+| `create-database-agent` | `/dev-workflows:create-database-agent` | Need a database expert agent prompt |
+| `create-cloud-agent` | `/dev-workflows:create-cloud-agent` | Need a cloud architect agent prompt |
+| `create-devops-agent` | `/dev-workflows:create-devops-agent` | Need a DevOps/SRE agent prompt |
+| `create-security-agent` | `/dev-workflows:create-security-agent` | Need a security engineer agent prompt |
 
 ---
 
@@ -71,10 +84,10 @@ workspace-init → workspace-continue (each session) → workspace-add-repo (new
 
 ## What Each Skill Produces
 
-- `project-init` → `md_docs/` with `AGENT_CONTEXT.md`, architecture docs, module map
-- `project-continue` → task file in `md_docs/tasks/YYYY-MM-DD_*.md`
-- `project-handoff` → `md_docs/HANDOFF_YYYY-MM-DD.md` with state, decisions, next steps
-- `project-audit` → `md_docs/AUDIT_YYYY-MM-DD.md` across 7 dimensions
+- `project-init` → `.context8/` with `AGENT_CONTEXT.md`, architecture docs, module map
+- `project-continue` → task file in `.context8/tasks/YYYY-MM-DD_*.md`
+- `project-handoff` → `.context8/HANDOFF_YYYY-MM-DD.md` with state, decisions, next steps
+- `project-audit` → `.context8/AUDIT_YYYY-MM-DD.md` across 7 dimensions
 - `task-plan` → task file with acceptance criteria, step-by-step plan, risk table
 - `task-do` → implementation + updated task file with completion status
 - `task-review` → review report: verdict READY FOR PR or BLOCKED with reasons
@@ -107,6 +120,16 @@ uv run install.py             # interactive
 uv run install.py --dry-run   # preview, no writes
 uv run install.py --uninstall # remove
 ```
+
+---
+
+## Agent Documentation
+
+This project uses a structured documentation system in `.context8/`.
+See [`.context8/README.md`](.context8/README.md) for the full index.
+
+When working with an AI agent, use `.context8/AGENT_SYSTEM_PROMPT.md`
+as the system prompt and `.context8/AGENT_CONTEXT.md` as the primary reference.
 
 ---
 
@@ -157,7 +180,7 @@ agents_prompts/
 ## Rules
 
 - Every skill enforces phases. Do not skip phases, even for "simple" tasks.
-- Skills produce files (`md_docs/`, task files, handoff summaries). Output goes to disk, not inline.
+- Skills produce files (`.context8/`, task files, handoff summaries). Output goes to disk, not inline.
 - All documentation written in English unless explicitly overridden.
 - `project-review` blocks PR if any security issue is unresolved.
 - `task-hotfix` rule: if the fix requires more than 20 lines changed, pause and consider a targeted mitigation instead.

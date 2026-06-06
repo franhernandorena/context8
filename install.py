@@ -37,6 +37,14 @@ SKILLS = [
     ("task-do",           "Execute a planned task step by step"),
     ("task-review",       "Pre-PR code review (correctness, security, tests)"),
     ("task-hotfix",       "Urgent production fix with controlled speed"),
+    ("create-qa-agent",       "Generate a professional QA/Test engineer agent prompt"),
+    ("create-architect-agent", "Generate a professional Software Architect agent prompt"),
+    ("create-backend-agent",   "Generate a professional Backend developer agent prompt"),
+    ("create-frontend-agent",  "Generate a professional Frontend developer agent prompt"),
+    ("create-database-agent",  "Generate a professional Database expert agent prompt"),
+    ("create-cloud-agent",     "Generate a professional Cloud architect agent prompt"),
+    ("create-devops-agent",    "Generate a professional DevOps/SRE agent prompt"),
+    ("create-security-agent",  "Generate a professional Security engineer agent prompt"),
 ]
 
 SKILL_NAMES = [s[0] for s in SKILLS]
