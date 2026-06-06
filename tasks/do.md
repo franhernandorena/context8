@@ -1,6 +1,6 @@
 # TASK EXECUTION — Implement a Planned Task
 
-## RULE: A task file in `md_docs/tasks/` with status "Planned" must exist before running this prompt.
+## RULE: A task file in `.context8/tasks/` with status "Planned" must exist before running this prompt.
 
 Use this after `tasks/plan.md` has produced a task file. This prompt drives the implementation.
 
@@ -10,13 +10,13 @@ Use this after `tasks/plan.md` has produced a task file. This prompt drives the 
 
 ### 1.1 Find the task file
 ```bash
-ls -lt md_docs/tasks/ | head -10
+ls -lt .context8/tasks/ | head -10
 ```
 Read the task file you are about to implement. If status is not "Planned", confirm before proceeding.
 
 ### 1.2 Load project context
 Read in this order:
-1. `md_docs/AGENT_CONTEXT.md` — tech stack, architecture, patterns, gotchas.
+1. `.context8/AGENT_CONTEXT.md` — tech stack, architecture, patterns, gotchas.
 2. Every file listed under **Files to Read** in the task file.
 3. Relevant architecture docs flagged in the task file.
 
@@ -120,11 +120,11 @@ If a criterion cannot be checked off, do NOT mark the task complete.
 - [HH:MM] All steps complete. Tests pass. Linting clean.
 ```
 
-### 5.2 Update md_docs/ if architecture changed
-- Data flow changed → update `md_docs/architecture/data_flow.md`
-- New module or changed boundaries → update `md_docs/architecture/module_map.md`
-- New/changed env vars → update `md_docs/architecture/infrastructure.md`
-- Significant persistent change → update `md_docs/AGENT_CONTEXT.md`
+### 5.2 Update .context8/ if architecture changed
+- Data flow changed → update `.context8/architecture/data_flow.md`
+- New module or changed boundaries → update `.context8/architecture/module_map.md`
+- New/changed env vars → update `.context8/architecture/infrastructure.md`
+- Significant persistent change → update `.context8/AGENT_CONTEXT.md`
 
 ### 5.3 Final commit
 ```bash
@@ -157,7 +157,7 @@ Link the PR URL in the task file.
 - [ ] Tests pass (final run complete).
 - [ ] No linting errors.
 - [ ] Task file status = "Complete", all modified files listed.
-- [ ] Relevant `md_docs/` docs updated if architecture changed.
+- [ ] Relevant `.context8/` docs updated if architecture changed.
 - [ ] All commits use semantic messages.
 - [ ] No secrets, debug prints, or commented-out code left behind.
 - [ ] PR opened and linked (if required by the project workflow).

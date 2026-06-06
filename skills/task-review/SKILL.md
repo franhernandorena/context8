@@ -43,7 +43,7 @@ git diff main...HEAD
 ### 1.2 Read the task file
 Find and read the task file for this work:
 ```bash
-ls -lt md_docs/tasks/ | head -5
+ls -lt .context8/tasks/ | head -5
 ```
 
 Verify:
@@ -52,7 +52,7 @@ Verify:
 - All modified files are listed.
 
 ### 1.3 Load relevant context
-- `md_docs/AGENT_CONTEXT.md` — conventions, patterns, gotchas.
+- `.context8/AGENT_CONTEXT.md` — conventions, patterns, gotchas.
 - Every file modified in this diff (read fully, not just the diff).
 
 ---
@@ -110,7 +110,7 @@ For each changed function or branch:
 
 ## Phase 5 — Convention Review
 
-Check against `md_docs/architecture/key_patterns.md` and `md_docs/AGENT_CONTEXT.md`:
+Check against `.context8/architecture/key_patterns.md` and `.context8/AGENT_CONTEXT.md`:
 
 - [ ] Naming: files, functions, variables follow project conventions.
 - [ ] Import ordering matches project style.

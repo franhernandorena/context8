@@ -1,16 +1,16 @@
 ---
 name: workflow-init
-description: Use when setting up a new multi-repo workspace for the first time — discovers child repos, creates root md_docs/ and per-repo md_docs/ with agent-ready context
+description: Use when setting up a new multi-repo workspace for the first time — discovers child repos, creates root .context8/ and per-repo .context8/ with agent-ready context
 ---
 
 # Workflow Init — Multi-Repo Workspace Bootstrap
 
 ## Overview
-Bootstraps a workspace: a parent folder containing multiple independent repos. Creates a root `md_docs/` (navigation + cross-repo overview) and a full `md_docs/` inside each child repo. No code changes — documentation only.
+Bootstraps a workspace: a parent folder containing multiple independent repos. Creates a root `.context8/` (navigation + cross-repo overview) and a full `.context8/` inside each child repo. No code changes — documentation only.
 
 ## When to use
 - First time working in a folder that contains multiple git repos
-- Workspace has no `md_docs/` at the root level
+- Workspace has no `.context8/` at the root level
 - Need agent-ready context before starting cross-repo work
 
 ## When NOT to use
@@ -19,9 +19,9 @@ Bootstraps a workspace: a parent folder containing multiple independent repos. C
 - Adding one new repo to existing workspace → use `workflow-add-repo`
 
 ## Output
-- `md_docs/README.md` — workspace index
-- `md_docs/WORKSPACE_OVERVIEW.md` — cross-repo context
-- `[repo]/md_docs/` — full context for each child repo
+- `.context8/README.md` — workspace index
+- `.context8/WORKSPACE_OVERVIEW.md` — cross-repo context
+- `[repo]/.context8/` — full context for each child repo
 
 ## Full Prompt
 
@@ -30,8 +30,8 @@ Bootstraps a workspace: a parent folder containing multiple independent repos. C
 ## RULE: No code changes before this setup is complete. Run every phase in order.
 
 A workspace is a parent folder containing multiple independent repositories (e.g., `proyecto_a/` holding `front_a/` and `back_a/`). This prompt bootstraps:
-- A **root `md_docs/`**: workspace-level guide, global tasks, cross-repo overview only.
-- A **per-repo `md_docs/`**: full independent context for each child repo.
+- A **root `.context8/`**: workspace-level guide, global tasks, cross-repo overview only.
+- A **per-repo `.context8/`**: full independent context for each child repo.
 
 ---
 
@@ -52,7 +52,7 @@ List every directory that is an independent git repo. These are your **child rep
 
 ### 1.3 Check for existing documentation
 ```bash
-find . -name "md_docs" -type d | sort
+find . -name ".context8" -type d | sort
 find . -name "*.md" -maxdepth 2 | sort
 ```
 
@@ -64,19 +64,19 @@ Read any files present at the root:
 
 ---
 
-## Phase 2 — Create Root `md_docs/`
+## Phase 2 — Create Root `.context8/`
 
-The root `md_docs/` is a **navigation layer only**. It does NOT duplicate per-repo content.
+The root `.context8/` is a **navigation layer only**. It does NOT duplicate per-repo content.
 
 ```
-md_docs/
+.context8/
 ├── README.md                  # Workspace index — links to all child repos
 ├── WORKSPACE_OVERVIEW.md      # What this workspace is, who uses it, global architecture
 └── tasks/
     └── (global / cross-repo task files go here)
 ```
 
-### md_docs/README.md
+### .context8/README.md
 ```markdown
 # Workspace: [workspace name]
 
@@ -84,10 +84,10 @@ md_docs/
 
 | Repo | Path | Purpose | Full docs |
 |------|------|---------|-----------|
-| [name] | ./[path] | [one-line purpose] | [path/md_docs/README.md] |
+| [name] | ./[path] | [one-line purpose] | [path/.context8/README.md] |
 
 ## How to use this workspace
-- For work on a specific repo: navigate to its folder and read `md_docs/AGENT_CONTEXT.md`.
+- For work on a specific repo: navigate to its folder and read `.context8/AGENT_CONTEXT.md`.
 - For cross-repo tasks: read `WORKSPACE_OVERVIEW.md` and check `tasks/` here.
 - To bootstrap a new session on a child repo: use `project-continue` skill inside that repo's folder.
 
@@ -95,7 +95,7 @@ md_docs/
 See `tasks/` in this directory for cross-repo or workspace-level work.
 ```
 
-### md_docs/WORKSPACE_OVERVIEW.md
+### .context8/WORKSPACE_OVERVIEW.md
 Must include:
 ```markdown
 # Workspace Overview
@@ -188,11 +188,11 @@ Identify and read:
 #### Infrastructure & cloud
 Read any IaC files: terraform/ / pulumi/ / cdk/ / serverless.yml / kubernetes/ / k8s/
 
-### 3.3 Create per-repo `md_docs/`
+### 3.3 Create per-repo `.context8/`
 
 Inside the child repo, create:
 ```
-[repo]/md_docs/
+[repo]/.context8/
 ├── README.md                     # Index + quick-start for agents
 ├── AGENT_CONTEXT.md              # Comprehensive repo context
 ├── AGENT_SYSTEM_PROMPT.md        # System prompt for new agent instantiation
@@ -264,7 +264,7 @@ Ready-to-paste system prompt:
 - Primary workflow: use `project-continue` skill → read `AGENT_CONTEXT.md` → check `tasks/`
 - Top 3–5 conventions to follow strictly
 - What NOT to do (common mistakes for this codebase)
-- Reference to workspace: "This repo is part of workspace `[name]`. Cross-repo context: `../../md_docs/WORKSPACE_OVERVIEW.md`"
+- Reference to workspace: "This repo is part of workspace `[name]`. Cross-repo context: `../../.context8/WORKSPACE_OVERVIEW.md`"
 
 ### 3.6 Populate remaining docs (per repo)
 
@@ -285,15 +285,15 @@ Add or update:
 ## Agent Documentation
 
 This repo is part of the **[workspace name]** workspace.
-See [`md_docs/README.md`](md_docs/README.md) for the full agent documentation index.
-For cross-repo context: [`../../md_docs/WORKSPACE_OVERVIEW.md`](../../md_docs/WORKSPACE_OVERVIEW.md)
+See [`.context8/README.md`](.context8/README.md) for the full agent documentation index.
+For cross-repo context: [`../../.context8/WORKSPACE_OVERVIEW.md`](../../.context8/WORKSPACE_OVERVIEW.md)
 ```
 
 ---
 
-## Phase 4 — Finalize Root `md_docs/`
+## Phase 4 — Finalize Root `.context8/`
 
-After all child repos are bootstrapped, update the root `md_docs/README.md`:
+After all child repos are bootstrapped, update the root `.context8/README.md`:
 - Fill in the repo table with correct paths, purposes, and links.
 - Note any cross-repo relationships discovered during Phase 3.
 - Update WORKSPACE_OVERVIEW.md with any concrete details found (shared infra, API contracts, etc.)
@@ -303,11 +303,11 @@ After all child repos are bootstrapped, update the root `md_docs/README.md`:
 ## Completion Checklist
 
 - [ ] All child repos identified in Phase 1
-- [ ] Root `md_docs/` created with README and WORKSPACE_OVERVIEW
-- [ ] Each child repo has a complete `md_docs/` with all required files
+- [ ] Root `.context8/` created with README and WORKSPACE_OVERVIEW
+- [ ] Each child repo has a complete `.context8/` with all required files
 - [ ] AGENT_CONTEXT.md for each repo has all sections (no placeholder text)
 - [ ] AGENT_SYSTEM_PROMPT.md for each repo is ready to paste
-- [ ] Each repo's README.md references its `md_docs/` and the root `md_docs/`
+- [ ] Each repo's README.md references its `.context8/` and the root `.context8/`
 - [ ] Root README.md (or WORKSPACE_OVERVIEW.md) links all repos
 - [ ] All documentation written in English
 - [ ] No secrets or .env values written to any file
@@ -315,8 +315,8 @@ After all child repos are bootstrapped, update the root `md_docs/README.md`:
 ---
 
 ## Rules
-- Root `md_docs/` = navigation + global context only. Never duplicate per-repo content there.
-- Per-repo `md_docs/` = fully self-contained. Agent working on one repo must not need to read another repo's files.
+- Root `.context8/` = navigation + global context only. Never duplicate per-repo content there.
+- Per-repo `.context8/` = fully self-contained. Agent working on one repo must not need to read another repo's files.
 - Document what exists, not what should exist.
 - If a section has no content, write: "None currently. [Reason if known]."
 - Never truncate or skip a Phase 3 step because a repo "looks simple."

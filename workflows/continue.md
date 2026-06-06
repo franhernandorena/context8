@@ -3,7 +3,7 @@
 ## RULE: Complete every step in order before doing any work.
 
 A workflow resume is for returning to a workspace you have previously bootstrapped.
-The root `md_docs/` and per-repo `md_docs/` already exist. Your goal: reorient fast
+The root `.context8/` and per-repo `.context8/` already exist. Your goal: reorient fast
 and pick up exactly where the last session left off.
 
 ---
@@ -24,8 +24,8 @@ done
 
 ### 1.3 Check for in-progress or open tasks
 ```bash
-ls -lt md_docs/tasks/ 2>/dev/null | head -10
-find . -path '*/md_docs/tasks/*.md' | sort
+ls -lt .context8/tasks/ 2>/dev/null | head -10
+find . -path '*/.context8/tasks/*.md' | sort
 ```
 
 Read any task file whose status is "In progress" or "Blocked".
@@ -36,12 +36,12 @@ Read any task file whose status is "In progress" or "Blocked".
 
 Read in this order. Skip files you already have in context.
 
-1. `md_docs/WORKSPACE_OVERVIEW.md` — cross-repo relationships, global conventions.
-2. `md_docs/README.md` — workspace index, repo links.
-3. For each repo you will touch: `[repo]/md_docs/AGENT_CONTEXT.md`.
+1. `.context8/WORKSPACE_OVERVIEW.md` — cross-repo relationships, global conventions.
+2. `.context8/README.md` — workspace index, repo links.
+3. For each repo you will touch: `[repo]/.context8/AGENT_CONTEXT.md`.
 4. Relevant architecture docs only (same rule as per-repo `continue.md`).
 
-If `md_docs/` does not exist: stop and run `workflows/init.md` first.
+If `.context8/` does not exist: stop and run `workflows/init.md` first.
 
 ---
 
@@ -107,7 +107,7 @@ npm test -- --run 2>&1 | tail -20  # Node
 
 ### Documentation
 - Update `WORKSPACE_OVERVIEW.md` only for changes to cross-repo relationships or shared infra.
-- Update per-repo `md_docs/` files as per that repo's `continue.md` rules.
+- Update per-repo `.context8/` files as per that repo's `continue.md` rules.
 - Always update the task file's progress log as you work.
 
 ---
@@ -120,7 +120,7 @@ Before closing the session or marking the task complete:
 - [ ] Tests pass in every repo touched.
 - [ ] No linting errors in any affected repo.
 - [ ] Task file updated: status "Complete", all modified files listed.
-- [ ] Relevant `md_docs/` files updated if architecture or cross-repo relationships changed.
+- [ ] Relevant `.context8/` files updated if architecture or cross-repo relationships changed.
 - [ ] Changes committed with semantic messages in each repo.
 - [ ] No secrets or debug code left behind.
 - [ ] If PRs are expected: opened and linked in the task file.

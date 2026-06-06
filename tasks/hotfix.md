@@ -19,7 +19,7 @@ Answer these before touching any code:
 Record answers in a new task file:
 ```bash
 # Create task file
-touch md_docs/tasks/$(date +%Y-%m-%d)_hotfix_[short-description].md
+touch .context8/tasks/$(date +%Y-%m-%d)_hotfix_[short-description].md
 ```
 
 Task file status: `**Status**: In progress (hotfix)`

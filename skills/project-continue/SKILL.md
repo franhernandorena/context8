@@ -1,19 +1,19 @@
 ---
 name: project-continue
-description: Use at the start of any session on an existing project — checks git state, loads md_docs context, sets up or resumes task file, and enforces working rules before any code changes
+description: Use at the start of any session on an existing project — checks git state, loads .context8 context, sets up or resumes task file, and enforces working rules before any code changes
 ---
 
 # Project Continue — Session Bootstrap
 
 ## Overview
-Session bootstrap for an existing project. Orients in the codebase (git state, branch, local changes), loads project context from `md_docs/`, sets up or resumes a task file, and establishes working rules for code, git, testing, and documentation. Do not start work until Phase 3 is complete.
+Session bootstrap for an existing project. Orients in the codebase (git state, branch, local changes), loads project context from `.context8/`, sets up or resumes a task file, and establishes working rules for code, git, testing, and documentation. Do not start work until Phase 3 is complete.
 
 ## When to use
-- Starting any new session on a project that already has `md_docs/`
+- Starting any new session on a project that already has `.context8/`
 - Resuming after a handoff
 
 ## When NOT to use
-- Project has no `md_docs/` → use `project-init` first
+- Project has no `.context8/` → use `project-init` first
 - Multi-repo workspace → use `workflow-continue`
 
 ## Output
@@ -58,15 +58,15 @@ Read any modified files before touching them.
 
 Read in this exact order. Do not skip or reorder.
 
-1. **`md_docs/AGENT_CONTEXT.md`** — internalize everything: tech stack, architecture, patterns, conventions, gotchas.
-2. **`md_docs/PROJECT_OVERVIEW.md`** — high-level orientation.
+1. **`.context8/AGENT_CONTEXT.md`** — internalize everything: tech stack, architecture, patterns, conventions, gotchas.
+2. **`.context8/PROJECT_OVERVIEW.md`** — high-level orientation.
 3. **Relevant architecture docs** — read only the ones that apply to this task:
-   - `md_docs/architecture/data_flow.md` → if touching data pipelines, ingestion, or APIs
-   - `md_docs/architecture/key_patterns.md` → if adding new features or refactoring
-   - `md_docs/architecture/module_map.md` → if crossing module boundaries
-   - `md_docs/architecture/infrastructure.md` → if touching config, env vars, or deployment
+   - `.context8/architecture/data_flow.md` → if touching data pipelines, ingestion, or APIs
+   - `.context8/architecture/key_patterns.md` → if adding new features or refactoring
+   - `.context8/architecture/module_map.md` → if crossing module boundaries
+   - `.context8/architecture/infrastructure.md` → if touching config, env vars, or deployment
 
-If `md_docs/` does not exist: stop and run `project-init` before continuing.
+If `.context8/` does not exist: stop and run `project-init` before continuing.
 
 ---
 
@@ -74,11 +74,11 @@ If `md_docs/` does not exist: stop and run `project-init` before continuing.
 
 ### 3.1 Check for existing task files
 ```bash
-ls -lt md_docs/tasks/ 2>/dev/null | head -10
+ls -lt .context8/tasks/ 2>/dev/null | head -10
 ```
 - If a relevant task file exists → read it. Resume from where it left off.
 - If no task file exists → create one:
-  `md_docs/tasks/YYYY-MM-DD_short_description.md`
+  `.context8/tasks/YYYY-MM-DD_short_description.md`
 
 ### 3.2 Task file structure
 ```markdown
@@ -165,9 +165,9 @@ Follow these at all times during the session:
 - If you add new functionality, add tests for it (same pattern as existing tests).
 
 ### Documentation
-- If you change the architecture, data flow, or a key pattern → update the relevant `md_docs/architecture/` file.
-- If you add or remove env vars → update `md_docs/architecture/infrastructure.md`.
-- If you add a new module or change module boundaries → update `md_docs/architecture/module_map.md`.
+- If you change the architecture, data flow, or a key pattern → update the relevant `.context8/architecture/` file.
+- If you add or remove env vars → update `.context8/architecture/infrastructure.md`.
+- If you add a new module or change module boundaries → update `.context8/architecture/module_map.md`.
 - Update AGENT_CONTEXT.md only for significant, persistent changes (not minor fixes).
 - Always update the task file's progress log as you work.
 
@@ -187,7 +187,7 @@ Before closing the session or marking the task complete:
   npm run lint 2>/dev/null || true
   ```
 - [ ] Task file is updated: status set to "Complete", all modified files listed.
-- [ ] Relevant `md_docs/` docs updated if architecture changed.
+- [ ] Relevant `.context8/` docs updated if architecture changed.
 - [ ] Changes committed with semantic commit messages.
 - [ ] No secrets or debug code left behind.
 - [ ] If a PR is expected: open it and link it in the task file.

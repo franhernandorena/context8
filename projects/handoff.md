@@ -2,7 +2,7 @@
 
 ## RULE: No code changes. Documentation and state capture only.
 
-Use this when leaving a project so the next agent (or developer) can pick up with zero ambiguity. Output is an updated `md_docs/` and a handoff summary.
+Use this when leaving a project so the next agent (or developer) can pick up with zero ambiguity. Output is an updated `.context8/` and a handoff summary.
 
 ---
 
@@ -19,7 +19,7 @@ git diff --stat HEAD
 
 ### 1.2 Open tasks
 ```bash
-ls -lt md_docs/tasks/ | head -20
+ls -lt .context8/tasks/ | head -20
 ```
 Read every task file whose status is "In progress" or "Blocked".
 
@@ -34,10 +34,10 @@ Document everything found. Nothing should be hidden from the next agent.
 
 ---
 
-## Phase 2 — Update md_docs/
+## Phase 2 — Update .context8/
 
 ### 2.1 AGENT_CONTEXT.md
-Read `md_docs/AGENT_CONTEXT.md`. For every section, verify it reflects the current state of the codebase:
+Read `.context8/AGENT_CONTEXT.md`. For every section, verify it reflects the current state of the codebase:
 
 - Tech stack: any new dependencies or version changes?
 - Architecture: any structural changes made during this work?
@@ -50,7 +50,7 @@ Read `md_docs/AGENT_CONTEXT.md`. For every section, verify it reflects the curre
 Update every section that is stale. Mark sections you cannot verify as `[Unverified as of YYYY-MM-DD]`.
 
 ### 2.2 Architecture docs
-For each file in `md_docs/architecture/`, verify and update if stale:
+For each file in `.context8/architecture/`, verify and update if stale:
 - `data_flow.md` — if data paths changed.
 - `key_patterns.md` — if new patterns emerged or anti-patterns were found.
 - `module_map.md` — if module structure changed.
@@ -67,7 +67,7 @@ For every "In progress" task:
 
 ## Phase 3 — Write Handoff Summary
 
-Create or update `md_docs/HANDOFF.md`:
+Create or update `.context8/HANDOFF.md`:
 
 ```markdown
 # Handoff — [project name]
@@ -82,7 +82,7 @@ Create or update `md_docs/HANDOFF.md`:
 ## Active Tasks
 | Task file | Status | Blocked on |
 |-----------|--------|------------|
-| `md_docs/tasks/YYYY-MM-DD_x.md` | In progress | [or "nothing"] |
+| `.context8/tasks/YYYY-MM-DD_x.md` | In progress | [or "nothing"] |
 
 ## Git State
 - Branch: [branch name]
@@ -101,7 +101,7 @@ Create or update `md_docs/HANDOFF.md`:
 | [description] | high/med/low | [human / other system / unknown] |
 
 ## Context Gaps
-[Things the next agent will need to know that are NOT documented in md_docs/. Be explicit.]
+[Things the next agent will need to know that are NOT documented in .context8/. Be explicit.]
 
 ## Decisions Pending
 [Any architectural or implementation decisions left unmade. Include relevant context.]
@@ -117,7 +117,7 @@ Create or update `md_docs/HANDOFF.md`:
 
 ## Phase 4 — Verify Handoff Completeness
 
-- [ ] `md_docs/AGENT_CONTEXT.md` is up to date (no stale sections).
+- [ ] `.context8/AGENT_CONTEXT.md` is up to date (no stale sections).
 - [ ] All in-progress task files have current progress logs.
 - [ ] `HANDOFF.md` exists and has no empty required sections.
 - [ ] Git state is documented (uncommitted changes, unpushed commits).

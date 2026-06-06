@@ -6,7 +6,7 @@ description: Use before implementing any complex feature, cross-module change, o
 # Task Plan — Detailed Task Breakdown
 
 ## Overview
-Planning-only prompt. Loads project context, understands the task, runs targeted codebase reconnaissance, and produces a detailed `md_docs/tasks/` file with ordered steps, acceptance criteria, unknowns, risks, and a test plan. No application code is written.
+Planning-only prompt. Loads project context, understands the task, runs targeted codebase reconnaissance, and produces a detailed `.context8/tasks/` file with ordered steps, acceptance criteria, unknowns, risks, and a test plan. No application code is written.
 
 ## When to use
 - Complex features spanning multiple files or modules
@@ -19,13 +19,13 @@ Planning-only prompt. Loads project context, understands the task, runs targeted
 - Hotfix needed urgently → use `task-hotfix`
 
 ## Output
-- `md_docs/tasks/YYYY-MM-DD_[description].md` — complete task file with status "Planned"
+- `.context8/tasks/YYYY-MM-DD_[description].md` — complete task file with status "Planned"
 
 ## Full Prompt
 
 # TASK PLANNING — Detailed Task Breakdown
 
-## RULE: This prompt plans only. No code changes. Output is a task file in `md_docs/tasks/`.
+## RULE: This prompt plans only. No code changes. Output is a task file in `.context8/tasks/`.
 
 Use this when you need a thorough plan before starting work — complex features, cross-module changes, risky refactors, or anything where implementation order matters.
 
@@ -35,15 +35,15 @@ Use this when you need a thorough plan before starting work — complex features
 
 Read in this exact order. Do not skip.
 
-1. **`md_docs/AGENT_CONTEXT.md`** — tech stack, architecture, patterns, conventions, gotchas.
-2. **`md_docs/PROJECT_OVERVIEW.md`** — high-level orientation.
+1. **`.context8/AGENT_CONTEXT.md`** — tech stack, architecture, patterns, conventions, gotchas.
+2. **`.context8/PROJECT_OVERVIEW.md`** — high-level orientation.
 3. **Relevant architecture docs** (only what applies to this task):
-   - `md_docs/architecture/data_flow.md` → if touching data pipelines, ingestion, or APIs
-   - `md_docs/architecture/key_patterns.md` → if adding features or refactoring
-   - `md_docs/architecture/module_map.md` → if crossing module boundaries
-   - `md_docs/architecture/infrastructure.md` → if touching config, env vars, or deployment
+   - `.context8/architecture/data_flow.md` → if touching data pipelines, ingestion, or APIs
+   - `.context8/architecture/key_patterns.md` → if adding features or refactoring
+   - `.context8/architecture/module_map.md` → if crossing module boundaries
+   - `.context8/architecture/infrastructure.md` → if touching config, env vars, or deployment
 
-If `md_docs/` does not exist: stop and run `project-init` first.
+If `.context8/` does not exist: stop and run `project-init` first.
 
 ---
 
@@ -130,7 +130,7 @@ Produce a detailed step-by-step plan. Each step must be atomic, independently ve
 
 ## Phase 5 — Write the Task File
 
-Create the file at: `md_docs/tasks/YYYY-MM-DD_short_description.md`
+Create the file at: `.context8/tasks/YYYY-MM-DD_short_description.md`
 
 Use this structure:
 

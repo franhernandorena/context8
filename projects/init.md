@@ -92,7 +92,7 @@ Before writing any docs, synthesize what you found:
 Create the following structure. Every file is mandatory.
 
 ```
-md_docs/
+.context8/
 ├── README.md                     # Index + quick-start for agents
 ├── AGENT_CONTEXT.md              # Comprehensive project context
 ├── AGENT_SYSTEM_PROMPT.md        # System prompt for new agent instantiation
@@ -112,7 +112,7 @@ Add additional architecture files as needed (e.g., `audit_system.md`, `pipeline_
 
 ## Phase 4 — Populate Documentation
 
-### md_docs/AGENT_CONTEXT.md
+### .context8/AGENT_CONTEXT.md
 Must include ALL of the following sections. Be exhaustive — a future agent must not need to re-read source code to operate.
 
 ```markdown
@@ -161,7 +161,7 @@ Must include ALL of the following sections. Be exhaustive — a future agent mus
 [How versions are managed, changelog convention, release steps]
 ```
 
-### md_docs/AGENT_SYSTEM_PROMPT.md
+### .context8/AGENT_SYSTEM_PROMPT.md
 Write a ready-to-paste system prompt that:
 - Describes the project in 2–3 sentences
 - Lists the tech stack
@@ -169,14 +169,14 @@ Write a ready-to-paste system prompt that:
 - Lists the top 3–5 conventions to follow strictly
 - States what NOT to do (common mistakes for this codebase)
 
-### md_docs/PROJECT_OVERVIEW.md
+### .context8/PROJECT_OVERVIEW.md
 1-page summary: what the project does, who uses it, key architectural decisions, current state, next priorities.
 
-### md_docs/architecture/data_flow.md
+### .context8/architecture/data_flow.md
 Trace the full lifecycle of a request or data record from entry to exit.
 Include: sources → ingestion → processing/transformation → storage → output/API.
 
-### md_docs/architecture/key_patterns.md
+### .context8/architecture/key_patterns.md
 Document:
 - File/folder naming conventions
 - Module boundary rules
@@ -185,10 +185,10 @@ Document:
 - How new features should be added (step-by-step pattern)
 - Anti-patterns observed in the codebase (what NOT to do)
 
-### md_docs/architecture/module_map.md
+### .context8/architecture/module_map.md
 Visual (ASCII or mermaid) map of the main modules and their dependencies.
 
-### md_docs/architecture/infrastructure.md
+### .context8/architecture/infrastructure.md
 - Cloud provider(s) and services used
 - All environment variables (name, purpose, example value — no real secrets)
 - Container setup (ports, volumes, networks)
@@ -204,11 +204,11 @@ Add or update a section in the root README.md:
 ```markdown
 ## Agent Documentation
 
-This project uses a structured documentation system in `md_docs/`.
-See [`md_docs/README.md`](md_docs/README.md) for the full index.
+This project uses a structured documentation system in `.context8/`.
+See [`.context8/README.md`](.context8/README.md) for the full index.
 
-When working with an AI agent, use `md_docs/AGENT_SYSTEM_PROMPT.md`
-as the system prompt and `md_docs/AGENT_CONTEXT.md` as the primary reference.
+When working with an AI agent, use `.context8/AGENT_SYSTEM_PROMPT.md`
+as the system prompt and `.context8/AGENT_CONTEXT.md` as the primary reference.
 ```
 
 ---
@@ -217,10 +217,10 @@ as the system prompt and `md_docs/AGENT_CONTEXT.md` as the primary reference.
 
 Before considering this task done, verify:
 - [ ] All Phase 1 commands were run and their output was analyzed
-- [ ] md_docs/ directory exists with all required files
+- [ ] .context8/ directory exists with all required files
 - [ ] AGENT_CONTEXT.md has all required sections populated (not placeholder text)
 - [ ] AGENT_SYSTEM_PROMPT.md is ready to paste as a system prompt
-- [ ] Root README.md references md_docs/
+- [ ] Root README.md references .context8/
 - [ ] All documentation is written in English
 - [ ] No secrets or .env values were written to any file
 

@@ -2,7 +2,7 @@
 
 ## RULE: No code changes. Read-only. Output is an audit report.
 
-Use when joining a project that has no `md_docs/`, has stale documentation, or when you need an honest assessment of the current state before planning work. Output goes into `md_docs/AUDIT.md`.
+Use when joining a project that has no `.context8/`, has stale documentation, or when you need an honest assessment of the current state before planning work. Output goes into `.context8/AUDIT.md`.
 
 ---
 
@@ -91,7 +91,7 @@ For each dimension, write findings: what exists, what is missing, severity (high
 
 ### 2.1 Documentation coverage
 - Is there a README? Is it accurate?
-- Does `md_docs/` exist? Is it current?
+- Does `.context8/` exist? Is it current?
 - Are architecture decisions documented (ADRs)?
 - Can a new developer understand the project from existing docs alone?
 
@@ -141,7 +141,7 @@ For each dimension, write findings: what exists, what is missing, severity (high
 
 ## Phase 3 — Write Audit Report
 
-Create `md_docs/AUDIT.md`:
+Create `.context8/AUDIT.md`:
 
 ```markdown
 # Project Audit — [project name]
@@ -179,7 +179,7 @@ Create `md_docs/AUDIT.md`:
 | [description] | high/med/low | [action] |
 
 ## Documentation Gaps
-[What is missing from md_docs/. Which sections of AGENT_CONTEXT.md do not exist yet.]
+[What is missing from .context8/. Which sections of AGENT_CONTEXT.md do not exist yet.]
 
 ## Test Coverage Gaps
 [Specific modules or paths with zero or insufficient coverage.]
@@ -203,11 +203,11 @@ Create `md_docs/AUDIT.md`:
 
 ## Phase 4 — Bootstrap Documentation (optional)
 
-If `md_docs/` does not exist and the audit reveals the project is ready for it:
+If `.context8/` does not exist and the audit reveals the project is ready for it:
 - Stop here and run `projects/init.md` using findings from this audit as a head start.
 - Reference this audit file in the new AGENT_CONTEXT.md.
 
-If `md_docs/` exists but is stale:
+If `.context8/` exists but is stale:
 - Update stale sections using findings from this audit.
 - Note in each updated section: `[Updated by audit on YYYY-MM-DD]`.
 
@@ -217,7 +217,7 @@ If `md_docs/` exists but is stale:
 
 - [ ] All Phase 1 steps complete (no steps skipped).
 - [ ] All 7 dimensions assessed in Phase 2.
-- [ ] `md_docs/AUDIT.md` written with all required sections.
+- [ ] `.context8/AUDIT.md` written with all required sections.
 - [ ] Critical findings explicitly listed with severity.
 - [ ] Security concerns surface (even if "none found").
 - [ ] Recommended next steps are concrete and prioritized.

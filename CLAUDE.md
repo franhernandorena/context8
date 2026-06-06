@@ -10,7 +10,7 @@ Structured prompts for every stage of development work with an AI agent.
 - `dev-workflows:workflow-add-repo` — add a new repo to an existing workspace
 
 ### Projects (single repos)
-- `dev-workflows:project-init` — bootstrap a new project (creates md_docs/)
+- `dev-workflows:project-init` — bootstrap a new project (creates .context8/)
 - `dev-workflows:project-continue` — start a session on an existing project
 - `dev-workflows:project-handoff` — close a session cleanly for the next agent
 - `dev-workflows:project-audit` — assess a project with no or stale documentation
@@ -31,5 +31,5 @@ project-audit → project-init → project-continue → task-plan → task-do �
 
 ## Rules
 - Every skill enforces phases. Do not skip phases, even for "simple" tasks.
-- Skills produce files (`md_docs/`, task files, handoff summaries). Output goes to disk, not inline.
+- Skills produce files (`.context8/`, task files, handoff summaries). Output goes to disk, not inline.
 - All documentation written in English unless explicitly overridden.

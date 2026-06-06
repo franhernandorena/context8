@@ -2,7 +2,7 @@
 
 ## RULE: The workspace must already be bootstrapped (`workflows/init.md` complete). No code changes. Documentation only.
 
-Use this when adding a new child repo to a workspace that already has a root `md_docs/` and `WORKSPACE_OVERVIEW.md`.
+Use this when adding a new child repo to a workspace that already has a root `.context8/` and `WORKSPACE_OVERVIEW.md`.
 
 ---
 
@@ -10,22 +10,22 @@ Use this when adding a new child repo to a workspace that already has a root `md
 
 ### 1.1 Confirm workspace is bootstrapped
 ```bash
-ls md_docs/
-cat md_docs/README.md
+ls .context8/
+cat .context8/README.md
 ```
 
-If `md_docs/` does not exist or `WORKSPACE_OVERVIEW.md` is missing: stop and run `workflows/init.md` first.
+If `.context8/` does not exist or `WORKSPACE_OVERVIEW.md` is missing: stop and run `workflows/init.md` first.
 
 ### 1.2 Identify the new repo
 ```bash
 find . -maxdepth 2 -name ".git" -type d | sed 's|/.git||' | sort
 ```
 
-Confirm the new repo's path. Check it does not already appear in `md_docs/README.md`.
+Confirm the new repo's path. Check it does not already appear in `.context8/README.md`.
 
 ### 1.3 Check for existing documentation in the new repo
 ```bash
-find [new-repo-path] -name "md_docs" -type d
+find [new-repo-path] -name ".context8" -type d
 find [new-repo-path] -name "*.md" -maxdepth 2 | sort
 ```
 
@@ -92,11 +92,11 @@ Read any IaC files: terraform/ / pulumi/ / cdk/ / serverless.yml / kubernetes/ /
 
 ---
 
-## Phase 3 — Create Per-Repo md_docs/
+## Phase 3 — Create Per-Repo .context8/
 
 Inside the new repo, create:
 ```
-[new-repo]/md_docs/
+[new-repo]/.context8/
 ├── README.md
 ├── AGENT_CONTEXT.md
 ├── AGENT_SYSTEM_PROMPT.md
@@ -139,7 +139,7 @@ Ready-to-paste system prompt:
 - Primary workflow: `read projects/continue.md → read AGENT_CONTEXT.md → check tasks/`
 - Top 3–5 conventions to follow strictly
 - What NOT to do
-- Reference to workspace: `"This repo is part of workspace [name]. Cross-repo context: ../../md_docs/WORKSPACE_OVERVIEW.md"`
+- Reference to workspace: `"This repo is part of workspace [name]. Cross-repo context: ../../.context8/WORKSPACE_OVERVIEW.md"`
 
 ### PROJECT_OVERVIEW.md
 1-page: what it does, who uses it, key architectural decisions, current state, next priorities.
@@ -162,21 +162,21 @@ Add:
 ## Agent Documentation
 
 This repo is part of the **[workspace name]** workspace.
-See [`md_docs/README.md`](md_docs/README.md) for the full agent documentation index.
-For cross-repo context: [`../../md_docs/WORKSPACE_OVERVIEW.md`](../../md_docs/WORKSPACE_OVERVIEW.md)
+See [`.context8/README.md`](.context8/README.md) for the full agent documentation index.
+For cross-repo context: [`../../.context8/WORKSPACE_OVERVIEW.md`](../../.context8/WORKSPACE_OVERVIEW.md)
 ```
 
 ---
 
-## Phase 4 — Update Root md_docs/
+## Phase 4 — Update Root .context8/
 
-### 4.1 Update md_docs/README.md
+### 4.1 Update .context8/README.md
 Add the new repo to the repo table:
 ```markdown
-| [repo name] | ./[path] | [one-line purpose] | [path/md_docs/README.md] |
+| [repo name] | ./[path] | [one-line purpose] | [path/.context8/README.md] |
 ```
 
-### 4.2 Update md_docs/WORKSPACE_OVERVIEW.md
+### 4.2 Update .context8/WORKSPACE_OVERVIEW.md
 - Add the new repo to the **Repos** table.
 - Document any cross-repo relationships discovered (API contracts, shared DB, events, shared packages).
 - Update **Shared Infrastructure** if the new repo shares infra with existing repos.
@@ -187,11 +187,11 @@ Add the new repo to the repo table:
 ## Completion Checklist
 
 - [ ] New repo fully explored (all Phase 2 steps complete).
-- [ ] Per-repo `md_docs/` created with all required files.
+- [ ] Per-repo `.context8/` created with all required files.
 - [ ] `AGENT_CONTEXT.md` has all sections populated (no placeholder text).
 - [ ] `AGENT_SYSTEM_PROMPT.md` is ready to paste.
-- [ ] Repo's `README.md` references its `md_docs/` and the root `md_docs/`.
-- [ ] Root `md_docs/README.md` repo table updated.
+- [ ] Repo's `README.md` references its `.context8/` and the root `.context8/`.
+- [ ] Root `.context8/README.md` repo table updated.
 - [ ] `WORKSPACE_OVERVIEW.md` updated with new repo and any cross-repo relationships.
 - [ ] All documentation written in English.
 - [ ] No secrets or .env values written to any file.
@@ -199,7 +199,7 @@ Add the new repo to the repo table:
 ---
 
 ## Rules
-- Per-repo `md_docs/` must be fully self-contained. Agent working on this repo must not need to read other repos.
+- Per-repo `.context8/` must be fully self-contained. Agent working on this repo must not need to read other repos.
 - Document what exists, not what should exist.
 - If a section has no content, write: "None currently. [Reason if known]."
 - Never skip a Phase 2 step because the repo "looks simple."
