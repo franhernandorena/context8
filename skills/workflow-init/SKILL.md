@@ -278,7 +278,32 @@ Ready-to-paste system prompt:
 
 **architecture/infrastructure.md**: Cloud services, env vars (name + purpose + example, no real secrets), container setup, how to run locally, how to deploy.
 
-### 3.7 Update repo README.md
+### 3.7 Create WORKSPACE_LINK.md (per repo)
+
+Inside each child repo's `.context8/`, create `WORKSPACE_LINK.md`:
+
+```markdown
+# Workspace Link — [repo name]
+
+This repo is part of **workspace [name]**.
+
+## Workspace root
+`../../.context8/`
+
+## Sibling repos
+
+| Repo | Path | Purpose |
+|------|------|---------|
+| [name] | ../[path] | [one-line purpose] |
+| [name] | ../[path] | [one-line purpose] |
+
+## Why this matters
+- Implement only what belongs to this repo.
+- Before adding a new capability, check if a sibling repo already provides it.
+- For cross-repo changes, work from the workspace root using `workflow-continue`.
+```
+
+### 3.8 Update repo README.md
 
 Add or update:
 ```markdown

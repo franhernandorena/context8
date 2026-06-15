@@ -29,6 +29,11 @@ A workflow resume is for returning to a workspace you have previously bootstrapp
 The root `.context8/` and per-repo `.context8/` already exist. Your goal: reorient fast
 and pick up exactly where the last session left off.
 
+**Important**: This is a WORKFLOW (multi-repo workspace), not a single repository.
+The root folder contains multiple independent child repos. Each child repo is a
+self-contained project with its own `.context8/`. Do NOT confuse the workspace root
+with a project root — they serve different purposes.
+
 ---
 
 ## Phase 1 — Reorient in the Workspace

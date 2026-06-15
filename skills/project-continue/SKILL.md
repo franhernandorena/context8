@@ -68,6 +68,24 @@ Read in this exact order. Do not skip or reorder.
 
 If `.context8/` does not exist: stop and run `project-init` before continuing.
 
+### 2.1 Check for parent workspace
+**Critical**: Before starting any work, determine if this repo is part of a multi-repo workspace.
+This prevents duplicating functionality that exists in sibling repos.
+
+```bash
+ls ../../.context8/WORKSPACE_OVERVIEW.md 2>/dev/null && echo "WORKSPACE_CHILD" || echo "STANDALONE"
+```
+
+If `WORKSPACE_OVERVIEW.md` exists at `../../.context8/`:
+- This repo is a **child of a multi-repo workspace**.
+- Read `../../.context8/WORKSPACE_OVERVIEW.md` — specifically the **Repos** table.
+  You need only the high-level view: what each sibling repo does, their tech stack, and role.
+- Read `.context8/WORKSPACE_LINK.md` (if it exists) for a compact summary of sibling repos.
+- Internalize: **implement only what belongs to this repo**. If a capability might exist in a sibling repo, do NOT implement it here — coordinate cross-repo via the workspace root.
+
+You do NOT need to read sibling repos' code, architecture docs, or detailed context.
+The goal is awareness, not deep knowledge.
+
 ---
 
 ## Phase 3 — Task Setup
@@ -92,6 +110,7 @@ ls -lt .context8/tasks/ 2>/dev/null | head -10
 **Date**: YYYY-MM-DD
 **Status**: In progress | Blocked | Complete
 **Branch**: [branch name]
+**Workspace**: [workspace name — only if parent workspace detected in 2.1]
 
 ## Objective
 [One paragraph: what needs to be done and why.]
@@ -99,6 +118,12 @@ ls -lt .context8/tasks/ 2>/dev/null | head -10
 ## Acceptance Criteria
 - [ ] ...
 - [ ] ...
+
+## Workspace Context
+[Only if parent workspace detected in 2.1]
+This repo is part of **[workspace name]**.
+Sibling repos: [repo1 (purpose), repo2 (purpose)].
+⚠️ Do NOT implement: [functionality that belongs to sibling repos].
 
 ## Approach
 [Brief plan: what files will be touched and in what order.]
@@ -135,6 +160,7 @@ Before writing or modifying any code:
 - [ ] I know the naming conventions for this codebase and will follow them.
 - [ ] I know how errors are handled in this codebase and will follow the same pattern.
 - [ ] A task file exists and has a clear objective and acceptance criteria.
+- [ ] **If part of a workspace**: I know which sibling repos exist and what NOT to implement here.
 
 ---
 

@@ -48,13 +48,22 @@ If `.context8/` does not exist: stop and run `project-init` first.
 
 ### 1.1 Detect context: workspace or single repo
 ```bash
-ls .context8/WORKSPACE_OVERVIEW.md 2>/dev/null && echo "WORKSPACE" || echo "SINGLE_REPO"
+ls .context8/WORKSPACE_OVERVIEW.md 2>/dev/null && echo "WORKSPACE" || echo "NOT_WORKSPACE_ROOT"
 ```
 
 If `WORKSPACE_OVERVIEW.md` exists, the current folder is a **multi-repo workspace parent**.
 Read it now to understand the workspace structure and which repos are involved.
 
+**If NOT a workspace root**: check if this repo is a child of a multi-repo workspace.
+```bash
+ls ../../.context8/WORKSPACE_OVERVIEW.md 2>/dev/null && echo "WORKSPACE_CHILD" || echo "SINGLE_REPO"
+```
+
+If `../../.context8/WORKSPACE_OVERVIEW.md` exists, this repo is a **child of a multi-repo workspace**.
+Read the parent WORKSPACE_OVERVIEW.md for sibling context (high-level: what other repos exist and what they do). This prevents planning cross-repo work in a single-repo task.
+
 **Workspace mode** → output will be a root-index task file + per-repo task files.
+**Workspace child mode** → output is one task file scoped to this repo, with workspace context (sibling awareness).
 **Single repo mode** → output is one task file (current behavior).
 
 ---

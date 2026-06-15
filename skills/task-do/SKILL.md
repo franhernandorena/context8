@@ -50,14 +50,23 @@ Read in this order:
 Update the task file: `**Status**: In progress`
 Add a progress log entry: `- [HH:MM] Started execution. Branch: [branch name].`
 
-### 1.4 Detect if this is a workspace root-index task
+### 1.4 Detect if this is a workspace root-index task or workspace child
 ```bash
-ls .context8/WORKSPACE_OVERVIEW.md 2>/dev/null && grep -q "Workspace (multi-repo)" .context8/tasks/*.md 2>/dev/null && echo "WORKSPACE_INDEX" || echo "SINGLE_REPO"
+ls .context8/WORKSPACE_OVERVIEW.md 2>/dev/null && grep -q "Workspace (multi-repo)" .context8/tasks/*.md 2>/dev/null && echo "WORKSPACE_INDEX" || echo "NOT_INDEX"
 ```
 
 If the task has `**Type**: Workspace (multi-repo)`, this is a **root-index task**.
 Read the **Repo Tasks** table and **Cross-repo Dependencies** sections.
 - Root-index task → skip Phase 2, go to **Phase 3A — Workspace execution mode**.
+
+**If NOT a root-index**: check if this repo is a child of a multi-repo workspace.
+```bash
+ls ../../.context8/WORKSPACE_OVERVIEW.md 2>/dev/null && echo "WORKSPACE_CHILD" || echo "SINGLE_REPO"
+```
+
+If `../../.context8/WORKSPACE_OVERVIEW.md` exists, this repo is a **child of a multi-repo workspace**.
+Read `.context8/WORKSPACE_LINK.md` (if it exists) for sibling context. Internalize: implement only what belongs to this repo — do NOT cross into sibling repo territory.
+
 - Single repo task → proceed to Phase 2 as normal.
 
 ---
