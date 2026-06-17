@@ -24,6 +24,9 @@ Structured prompts for every stage of development work with an AI agent.
 - `dev-workflows:task-review` — pre-PR code review (correctness, security, tests)
 - `dev-workflows:task-hotfix` — urgent production fix with controlled speed
 
+### Documents
+- `document:make-report` — generate structured markdown reports optimized for ClickUp Docs with proper tables, diagrams, and formatting
+
 ### Analysis
 - `dev-workflows:change-impact` — analyze blast radius before implementing
 - `dev-workflows:dependency-audit` — audit dependencies (vulns, outdated, unused)
