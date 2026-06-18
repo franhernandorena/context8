@@ -42,10 +42,10 @@ git stash list
 git branch -a
 ```
 
-### 1.2 Verificar ramas documentadas
+### 1.2 Verify documented branches
 ```bash
 # Mostrar ramas con su última actividad
-echo "=== Ramas locales ==="
+echo "=== Local branches ==="
 for branch in $(git branch --format='%(refname:short)'); do
   last_date=$(git log "$branch" -1 --format="%ci" 2>/dev/null)
   ahead=$(git rev-list --count "$branch" --not origin/"$branch" 2>/dev/null)
@@ -54,9 +54,9 @@ for branch in $(git branch --format='%(refname:short)'); do
 done
 ```
 
-Si existe `.context8/REPO_BRANCHES.md`, verificar que las ramas actuales coinciden con lo documentado. Si hay diferencias (ramas nuevas, ramas mergeadas ya eliminadas), actualizar el archivo.
+If `.context8/REPO_BRANCHES.md` exists, verify that current branches match what is documented. If there are differences (new branches, already-deleted merged branches), update the file.
 
-También verificar `.context8/PIPELINES.md`: si existe, revisar que los workflows listados siguen existiendo y que los triggers externos siguen siendo válidos. Si no existe, notificar al usuario que conviene crearlo vía `project-init`.
+Also check `.context8/PIPELINES.md`: if it exists, verify that the listed workflows still exist and that external triggers are still valid. If it doesn't exist, notify the user that it should be created via `project-init`.
 
 ### 1.3 Verify you are on the right branch
 ```bash

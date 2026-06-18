@@ -66,7 +66,7 @@ git remote -v
 git tag --sort=-creatordate | head -20
 ```
 
-Para cada rama local (excluyendo `main`, `master`, `develop`), detectar su propósito:
+For each local branch (excluding `main`, `master`, `develop`), detect its purpose:
 
 ```bash
 for branch in $(git branch --format='%(refname:short)' | grep -v '^main$\|^master$\|^develop$'); do
@@ -138,8 +138,8 @@ Create the following structure. Every file is mandatory.
 ├── AGENT_CONTEXT.md              # Comprehensive project context
 ├── AGENT_SYSTEM_PROMPT.md        # System prompt for new agent instantiation
 ├── PROJECT_OVERVIEW.md           # 1-page high-level summary
-├── REPO_BRANCHES.md              # Branches, tags, git conventions (shared con repo-cleanup)
-├── PIPELINES.md                  # CI/CD pipelines, triggers, entornos (shared con skill ci/cd)
+├── REPO_BRANCHES.md              # Branches, tags, git conventions (shared with repo-cleanup)
+├── PIPELINES.md                  # CI/CD pipelines, triggers, environments (shared with ci/cd skill)
 ├── architecture/
 │   ├── data_flow.md              # End-to-end data / request flow
 │   ├── key_patterns.md           # Design patterns, conventions, anti-patterns
@@ -221,8 +221,8 @@ Create the branch reference file. Run these commands to gather data:
 ```bash
 # Protected branches (convention)
 echo "## Protected Branches"
-echo "- \`main\` — Producción estable"
-echo "- \`develop\` — Integración de desarrollo"
+echo "- \`main\` — Stable production"
+echo "- \`develop\` — Development integration"
 
 # Git user
 echo ""
@@ -238,7 +238,7 @@ for branch in $(git branch --format='%(refname:short)' | sort); do
   last_msg=$(git log "$branch" -1 --format="%s" 2>/dev/null)
   behind=$(git rev-list --count --left-right origin/HEAD..."$branch" 2>/dev/null | cut -f2)
   ahead=$(git rev-list --count --left-right "$branch"...origin/"$branch" 2>/dev/null | cut -f1)
-  echo "- \`$branch\` — (último: $last_date) $last_msg"
+  echo "- \`$branch\` — (last: $last_date) $last_msg"
 done
 
 # Tags
@@ -256,8 +256,8 @@ Use the output to write `.context8/repo-branches.md`:
 # Repo Branches — [project name]
 
 ## Protected Branches
-- `main` — Producción estable
-- `develop` — Integración de desarrollo
+- `main` — Stable production
+- `develop` — Development integration
 
 ## Git Conventions
 - **User**: [name] <[email]>
@@ -267,27 +267,27 @@ Use the output to write `.context8/repo-branches.md`:
 
 | Branch | Last activity | Purpose | Status |
 |--------|--------------|---------|--------|
-| `main` | YYYY-MM-DD | Producción estable | active |
-| `develop` | YYYY-MM-DD | Integración | active |
+| `main` | YYYY-MM-DD | Stable production | active |
+| `develop` | YYYY-MM-DD | Integration | active |
 | `feat/xxx` | YYYY-MM-DD | [inferred from commit messages] | stale / active / merged |
 
 ## Tags
 | Tag | Date | Type | Description | Trigger |
 |-----|------|------|-------------|---------|
 | v1.0.0 | YYYY-MM-DD | release | v1.0.0 — [summary] | Deploys production |
-| v1.0.0-rc1 | YYYY-MM-DD | release-candidate | RC para QA | Deploys preprod |
+| v1.0.0-rc1 | YYYY-MM-DD | release-candidate | RC for QA | Deploys preprod |
 | v0.9.0 | YYYY-MM-DD | release | [summary] | Deploys production |
 
 ### Tag naming convention
-- `v<major>.<minor>.<patch>` — release estable a producción
-- `v<major>.<minor>.<patch>-rc<N>` — release candidate para QA/preprod
-- `v<major>.<minor>.<patch>-hotfix.<desc>` — hotfix a producción
+- `v<major>.<minor>.<patch>` — stable release to production
+- `v<major>.<minor>.<patch>-rc<N>` — release candidate for QA/preprod
+- `v<major>.<minor>.<patch>-hotfix.<desc>` — hotfix to production
 - `<any>-alpha.<N>` / `<any>-beta.<N>` — pre-release tests
 
 ### Tag triggers
-- Crear un tag `v*` normalmente dispara un deploy a producción vía Cloud Build / GitHub Actions.
-- Crear un tag `*-rc*` normalmente dispara un deploy a preprod.
-- Los tags se crean con `git tag -a vX.Y.Z -m "mensaje" && git push origin vX.Y.Z`.
+- Creating a tag `v*` normally triggers a production deploy via Cloud Build / GitHub Actions.
+- Creating a tag `*-rc*` normally triggers a preprod deploy.
+- Tags are created with `git tag -a vX.Y.Z -m "message" && git push origin vX.Y.Z`.
 ```
 
 ### .context8/PIPELINES.md
@@ -304,7 +304,7 @@ ls cloudbuild*yaml cloudbuild*/ 2>/dev/null | head -10
 
 echo ""
 echo "## Cloud Run / Cloud Functions triggers"
-gcloud functions list --format="table(name, trigger.eventType)" 2>/dev/null | head -20 || echo "(gcloud CLI no disponible)"
+gcloud functions list --format="table(name, trigger.eventType)" 2>/dev/null | head -20 || echo "(gcloud CLI not available)"
 ```
 
 Auto-detect triggers from GitHub Actions:
@@ -335,9 +335,9 @@ Write `.context8/PIPELINES.md`:
 
 | Workflow | Triggers | Description |
 |----------|----------|-------------|
-| `test.yml` | PR a develop, feat/* | Tests unitarios + lint |
-| `deploy-pre.yml` | push a main | Build + deploy a preprod |
-| `release.yml` | tag v* | Build + deploy a producción |
+| `test.yml` | PR to develop, feat/* | Unit tests + lint |
+| `deploy-pre.yml` | push to main | Build + deploy to preprod |
+| `release.yml` | tag v* | Build + deploy to production |
 
 ## Cloud Build triggers
 
@@ -345,37 +345,37 @@ Write `.context8/PIPELINES.md`:
 |---------|-------|--------|--------|
 | deploy-prod | tag v* | Cloud Run production | `cloudbuild-prod.yaml` |
 
-> Si el trigger está desplegado manualmente en GCP Console
-> y no tiene archivo YAML en el repo, se documenta como **External**.
+> If the trigger is deployed manually in GCP Console
+> and has no YAML file in the repo, it is documented as **External**.
 
-## External triggers (no están en el repo)
+## External triggers (not in the repo)
 
-Los siguientes triggers existen en el entorno cloud pero NO tienen configuración en el repositorio:
+The following triggers exist in the cloud environment but do NOT have configuration in the repository:
 
 | Trigger | Source | Action | Environment | Config location |
 |---------|--------|--------|-------------|-----------------|
-| Deploy preprod | push a `main` (GCP trigger) | Build → Cloud Run Pre | preprod | GCP Console — Cloud Build triggers |
+| Deploy preprod | push to `main` (GCP trigger) | Build → Cloud Run Pre | preprod | GCP Console — Cloud Build triggers |
 | Nightly DB backup | Cloud Scheduler (06:00 UTC) | Backup script | production | GCP Console — Cloud Scheduler |
 | PubSub → Function | Pub/Sub topic `new-user` | Cloud Function `onboard-user` | production | GCP Console — Cloud Functions |
 
-> **Mantenimiento**: Si se crea, modifica o elimina un trigger externo,
-> actualizar esta sección manualmente o vía CI/CD skill.
+> **Maintenance**: If an external trigger is created, modified, or removed,
+> update this section manually or via CI/CD skill.
 
 ## Environments
 
 | Environment | URL / endpoint | Deploy method | Deploy trigger | Approvals |
 |-------------|----------------|---------------|----------------|-----------|
 | Development | `localhost:8080` | docker compose / `uv run` | — | — |
-| Preproduction | `pre.example.com` | Cloud Build push to main | automático | — |
-| Production | `example.com` | Cloud Build tag v* | manual | requiere approval |
+| Preproduction | `pre.example.com` | Cloud Build push to main | automatic | — |
+| Production | `example.com` | Cloud Build tag v* | manual | requires approval |
 
 ## How to trigger a deploy manually
 
 ```bash
-# Preproducción: push a main
+# Preproduction: push to main
 git push origin main
 
-# Producción: crear tag semver
+# Production: create semver tag
 git tag -a v1.2.3 -m "release: auth module refactor"
 git push origin v1.2.3
 ```

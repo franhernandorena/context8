@@ -68,9 +68,9 @@ For each repo in the workspace, gather the following. Run queries in parallel wh
 ```bash
 BRANCH=$(git branch --show-current)
 echo "branch=$BRANCH"
-# Leer propósito desde REPO_BRANCHES.md si existe
+# Read purpose from REPO_BRANCHES.md if it exists
 PURPOSE=$(grep "| \`$BRANCH\`" .context8/REPO_BRANCHES.md 2>/dev/null | head -1 | awk -F'|' '{print $3}')
-echo "purpose=${PURPOSE:-$(echo "desconocido")}"
+echo "purpose=${PURPOSE:-$(echo "unknown")}"
 ```
 
 ### 2.2 Uncommitted changes

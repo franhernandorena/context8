@@ -74,66 +74,66 @@ Read `.context8/WORKSPACE_LINK.md` (if it exists) for sibling context. Internali
 
 ## Phase 2 — Git Setup & Branch
 
-### 2.1 Fetch para evitar worktree obsoleto
+### 2.1 Fetch to avoid stale worktree
 
 ```bash
 git fetch --prune 2>&1
 ```
 
-### 2.2 Detectar rama base (develop)
+### 2.2 Detect base branch (develop)
 
-Leer `.context8/repo-branches.md` para identificar la rama de desarrollo:
+Read `.context8/repo-branches.md` to identify the development branch:
 
 ```bash
 DEVELOP_BRANCH=$(grep -A5 "^## Protected Branches" .context8/repo-branches.md 2>/dev/null | grep "^\s*\- \`" | grep -v "main\|master" | head -1 | sed 's/.*`\(.*\)`.*/\1/')
 ```
 
-Si no se encontró en el archivo, detectar por convención:
+If not found in the file, detect by convention:
 
 ```bash
-# Buscar develop primero, sino main
+# Look for develop first, otherwise main
 for b in develop main master; do
   git show-ref --verify refs/heads/$b >/dev/null 2>&1 && { DEVELOP_BRANCH=$b; break; } 2>/dev/null
 done
 DEVELOP_BRANCH=${DEVELOP_BRANCH:-main}
-echo "Rama base (desarrollo): $DEVELOP_BRANCH"
+echo "Base branch (development): $DEVELOP_BRANCH"
 ```
 
-**Regla**: las feature branches SIEMPRE parten de `$DEVELOP_BRANCH`, no de `main`.
+**Rule**: feature branches ALWAYS branch from `$DEVELOP_BRANCH`, not `main`.
 
-### 2.3 Verificar rama actual
+### 2.3 Check current branch
 
 ```bash
 CURRENT_BRANCH=$(git branch --show-current)
-echo "Rama actual: $CURRENT_BRANCH"
+echo "Current branch: $CURRENT_BRANCH"
 ```
 
-- **Si ya estás en la rama correcta** (la que especifica el task file):
-  - Verificar que está actualizada contra `$DEVELOP_BRANCH`:
+- **If already on the correct branch** (the one specified in the task file):
+  - Verify it's up to date with `$DEVELOP_BRANCH`:
     ```bash
-    git merge-base --is-ancestor origin/$DEVELOP_BRANCH HEAD && echo "✅ Actualizada" || echo "⚠️ Está detrás de $DEVELOP_BRANCH — considera rebase"
+    git merge-base --is-ancestor origin/$DEVELOP_BRANCH HEAD && echo "✅ Up to date" || echo "⚠️ Behind $DEVELOP_BRANCH — consider rebase"
     ```
-  - Proceder.
+  - Proceed.
 
-- **Si estás en una rama con prefijo `feat/*`, `feature/*`, `fix/*`** (no coincide con la del task):
+- **If on a branch with prefix `feat/*`, `feature/*`, `fix/*`** (doesn't match the task):
   ```
-  ⚠️ Estás en <CURRENT_BRANCH>, no en la rama planeada en el task.
-  ¿Qué quieres hacer?
-    [c] continuar en <CURRENT_BRANCH> (actualizas el task file con esta rama)
-    [n] crear rama nueva <task-branch> desde $DEVELOP_BRANCH
+  ⚠️ You are on <CURRENT_BRANCH>, not the branch planned in the task.
+  What do you want to do?
+    [c] continue on <CURRENT_BRANCH> (update the task file with this branch)
+    [n] create new branch <task-branch> from $DEVELOP_BRANCH
   ```
 
-- **Si estás en `main`, `master`, `develop`**:
+- **If on `main`, `master`, `develop`**:
   ```bash
   git checkout -b [branch-name-from-task]
   ```
 
-- **Si estás en otra rama** (no feature, no base):
-  - Avisar y preguntar si continuar ahí o crear desde `$DEVELOP_BRANCH`.
+- **If on another branch** (not feature, not base):
+  - Notify and ask whether to continue there or create from `$DEVELOP_BRANCH`.
 
-### 2.4 Asegurar que la rama parte del último `$DEVELOP_BRANCH`
+### 2.4 Ensure branch starts from latest `$DEVELOP_BRANCH`
 
-Al crear la rama nueva, partir del último commit de `$DEVELOP_BRANCH`:
+When creating a new branch, start from the latest commit on `$DEVELOP_BRANCH`:
 
 ```bash
 git checkout $DEVELOP_BRANCH

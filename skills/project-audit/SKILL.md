@@ -63,10 +63,10 @@ git shortlog -sn --all | head -10
 git log --oneline --all --since="90 days ago" | wc -l
 ```
 
-Para cada rama local, detectar su propósito:
+For each local branch, detect its purpose:
 
 ```bash
-echo "=== Ramas y su propósito ==="
+echo "=== Branches and their purpose ==="
 for branch in $(git branch --format='%(refname:short)' | sort); do
   last_date=$(git log "$branch" -1 --format="%ci" 2>/dev/null)
   last_msg=$(git log "$branch" -1 --format="%s" 2>/dev/null)

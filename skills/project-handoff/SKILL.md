@@ -46,7 +46,7 @@ git diff --stat HEAD
 ```
 
 ### 1.2 Branch documentation
-Repasar el estado actual de cada rama y actualizar `.context8/repo-branches.md` si hay cambios (ramas nuevas, mergeadas, o eliminadas desde la última sesión).
+Review the current state of each branch and update `.context8/repo-branches.md` if there are changes (new branches, merged branches, or branches deleted since the last session).
 
 ```bash
 for branch in $(git branch --format='%(refname:short)'); do

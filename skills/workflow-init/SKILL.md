@@ -200,7 +200,7 @@ Inside the child repo, create:
 ├── AGENT_SYSTEM_PROMPT.md        # System prompt for new agent instantiation
 ├── PROJECT_OVERVIEW.md           # 1-page high-level summary
 ├── REPO_BRANCHES.md              # Branches, tags, git conventions
-├── PIPELINES.md                  # CI/CD pipelines, triggers, entornos
+├── PIPELINES.md                  # CI/CD pipelines, triggers, environments
 ├── WORKSPACE_LINK.md             # Reference to sibling repos (Phase 3.8)
 ├── architecture/
 │   ├── data_flow.md
@@ -290,8 +290,8 @@ For each child repo, create `.context8/repo-branches.md`:
 ```bash
 # Gather data
 echo "## Protected Branches"
-echo "- \`main\` — Producción estable"
-echo "- \`develop\` — Integración de desarrollo"
+echo "- \`main\` — Stable production"
+echo "- \`develop\` — Development integration"
 echo ""
 echo "## Branches"
 for branch in $(git branch --format='%(refname:short)' | sort); do
@@ -313,33 +313,33 @@ Write `<repo>/.context8/repo-branches.md`:
 # Repo Branches — [repo name]
 
 ## Protected Branches
-- `main` — Producción estable
-- `develop` — Integración de desarrollo
+- `main` — Stable production
+- `develop` — Development integration
 
 ## Branches
 
 | Branch | Last activity | Purpose | Status |
 |--------|--------------|---------|--------|
-| `main` | YYYY-MM-DD | Producción estable | active |
-| `develop` | YYYY-MM-DD | Integración | active |
+| `main` | YYYY-MM-DD | Stable production | active |
+| `develop` | YYYY-MM-DD | Integration | active |
 | `feat/xxx` | YYYY-MM-DD | [commit message] | active |
 
 ## Tags
 | Tag | Date | Type | Description | Trigger |
 |-----|------|------|-------------|---------|
 | v1.0.0 | YYYY-MM-DD | release | [summary] | Deploys production |
-| v1.0.0-rc1 | YYYY-MM-DD | release-candidate | RC para QA | Deploys preprod |
+| v1.0.0-rc1 | YYYY-MM-DD | release-candidate | RC for QA | Deploys preprod |
 
 ### Tag naming convention
-- `v<major>.<minor>.<patch>` — release estable
+- `v<major>.<minor>.<patch>` — stable release
 - `<version>-rc<N>` — release candidate
 - `<version>-hotfix.<desc>` — hotfix
 - `<any>-alpha.<N>` / `<any>-beta.<N>` — pre-release
 
 ### Tag triggers
-- Tag `v*` → normalmente despliega a producción.
-- Tag `*-rc*` → normalmente despliega a preprod.
-- Crear: `git tag -a vX.Y.Z -m "mensaje" && git push origin vX.Y.Z`
+- Tag `v*` → typically deploys to production.
+- Tag `*-rc*` → typically deploys to preprod.
+- Create: `git tag -a vX.Y.Z -m "message" && git push origin vX.Y.Z`
 ```
 
 ### 3.8 Create PIPELINES.md (per repo)
@@ -383,8 +383,8 @@ Write `<repo>/.context8/PIPELINES.md`:
 
 | Workflow | Triggers | Description |
 |----------|----------|-------------|
-| test.yml | PR a develop | Tests + lint |
-| deploy-pre.yml | push a main | Build + deploy preprod |
+| test.yml | PR to develop | Tests + lint |
+| deploy-pre.yml | push to main | Build + deploy preprod |
 
 ## Cloud Build
 
@@ -394,20 +394,20 @@ Write `<repo>/.context8/PIPELINES.md`:
 
 ## External triggers
 
-Triggers existentes en el entorno cloud pero SIN archivo en el repo:
+External triggers in the cloud environment but WITHOUT a file in the repo:
 
 | Trigger | Source | Action | Environment | Config location |
 |---------|--------|--------|-------------|-----------------|
 | [name] | [event] | [action] | [env] | GCP Console / GH UI |
 
-> **Nota**: Actualizar esta sección cuando se creen/modifiquen triggers externos.
+> **Note**: Update this section when external triggers are created or modified.
 
 ## Environments
 
 | Environment | URL | Deploy trigger | Approvals |
 |-------------|-----|---------------|-----------|
 | Development | localhost | — | — |
-| Preproduction | pre.example.com | push a main | automático |
+| Preproduction | pre.example.com | push to main | automatic |
 | Production | example.com | tag v* | manual |
 
 ## Manual deploy
