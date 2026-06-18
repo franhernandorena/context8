@@ -59,6 +59,7 @@ SKILLS = [
     ("release",          "End-to-end release workflow: tag, changelog, publish",              "dev-workflows"),
     ("task-continue",    "Resume a partially completed task from the last phase",             "dev-workflows"),
     ("repo-cleanup",     "Limpieza segura de ramas git: propias automático, ajenas con permiso", "dev-workflows"),
+    ("tag-create",       "Crea tags git semver: analiza cambios, sugiere versión, pide confirmación", "dev-workflows"),
     ("make-report",      "Generate structured markdown reports optimized for ClickUp Docs (tables, diagrams, formatting)", "document"),
 ]
 

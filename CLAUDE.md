@@ -26,6 +26,7 @@ Structured prompts for every stage of development work with an AI agent.
 
 ### Repository Maintenance
 - `dev-workflows:repo-cleanup` — revisa ramas git, limpia automáticamente las propias mergeadas y pide permiso antes de tocar ajenas
+- `dev-workflows:tag-create` — crea tags git semver: analiza cambios desde el último tag, sugiere versión, genera mensaje descriptivo y pide confirmación
 
 ### Documents
 - `document:make-report` — generate structured markdown reports optimized for ClickUp Docs with proper tables, diagrams, and formatting
