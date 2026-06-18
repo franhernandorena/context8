@@ -204,23 +204,16 @@ agents_prompts/
 ├── CLAUDE.md                     # Plugin context for Claude Code
 ├── GEMINI.md                     # Plugin context for Gemini CLI
 ├── gemini-extension.json         # Gemini extension manifest
+├── AGENTS.md                     # Plugin context for OpenCode / Hermes Agent
 │
-├── workflows/                    # Source prompts — multi-repo
-│   ├── init.md
-│   ├── continue.md
-│   └── add-repo.md
-│
-├── projects/                     # Source prompts — single repo
-│   ├── init.md
-│   ├── continue.md
-│   ├── handoff.md
-│   └── audit.md
-│
-├── tasks/                        # Source prompts — task execution
-│   ├── plan.md
-│   ├── do.md
-│   ├── review.md
-│   └── hotfix.md
+├── .context8/                    # Agent documentation & reports
+│   ├── AGENT_CONTEXT.md
+│   ├── AGENT_SYSTEM_PROMPT.md
+│   ├── PROJECT_OVERVIEW.md
+│   ├── README.md
+│   ├── architecture/
+│   ├── reports/
+│   └── tasks/
 │
 └── skills/                       # Packaged skills (installed by install.py)
     ├── workflow-init/
@@ -228,14 +221,26 @@ agents_prompts/
     │   └── prompt.md             # Full prompt content
     ├── workflow-continue/
     ├── workflow-add-repo/
+    ├── workflow-status/
     ├── project-init/
     ├── project-continue/
     ├── project-handoff/
     ├── project-audit/
+    ├── project-review/
     ├── task-plan/
     ├── task-do/
+    ├── task-continue/
     ├── task-review/
-    └── task-hotfix/
+    ├── task-hotfix/
+    ├── change-impact/
+    ├── dependency-audit/
+    ├── pr-description/
+    ├── deploy-plan/
+    ├── release/
+    ├── repo-cleanup/
+    ├── tag-create/
+    ├── make-report/
+    └── create-*/                 # Agent generator skills
 ```
 
 ---
