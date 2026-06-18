@@ -85,8 +85,27 @@ Do not proceed to a fix until root cause is confirmed.
 
 ## Phase 3 — Fix
 
-### 3.1 Branch
+### 3.1 Fetch y detectar rama base (producción)
+
 ```bash
+git fetch --prune 2>&1
+```
+
+Detectar rama de producción (main/master):
+
+```bash
+MAIN_BRANCH=$(grep -A5 "^## Protected Branches" .context8/repo-branches.md 2>/dev/null | grep "^\s*\- \`" | grep -i "main\|master\|production" | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+# Fallback: main o master
+MAIN_BRANCH=${MAIN_BRANCH:-main}
+git show-ref --verify refs/heads/$MAIN_BRANCH >/dev/null 2>&1 || MAIN_BRANCH=main
+echo "Rama base (producción): $MAIN_BRANCH"
+```
+
+**Regla**: los hotfixes SIEMPRE parten de la rama de producción (`$MAIN_BRANCH`), no de develop.
+
+```bash
+git checkout $MAIN_BRANCH
+git pull origin $MAIN_BRANCH 2>&1
 git checkout -b hotfix/[short-description]
 ```
 

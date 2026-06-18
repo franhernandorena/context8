@@ -76,10 +76,24 @@ If blockers exist:
 cat .context8/AGENT_CONTEXT.md 2>/dev/null
 ```
 
-### 3.2 Check git status
+### 3.2 Fetch y check git
+
+Sincronizar con remoto y verificar estado actual:
+
 ```bash
+git fetch --prune 2>&1
 git status
-git log --oneline -5
+git log --oneline --all -10
+git branch --show-current
+```
+
+Detectar si la rama actual está detrás de su base:
+
+```bash
+# Detectar rama base
+BASE_BRANCH=$(grep -A5 "^## Protected Branches" .context8/repo-branches.md 2>/dev/null | grep "^\s*\- \`" | grep -v "main\|master" | head -1 | sed 's/.*`\(.*\)`.*/\1/')
+BASE_BRANCH=${BASE_BRANCH:-develop}
+git merge-base --is-ancestor origin/$BASE_BRANCH HEAD 2>/dev/null && echo "✅ Rama actualizada" || echo "⚠️ Posiblemente detrás de $BASE_BRANCH"
 ```
 
 Are there uncommitted changes from the previous session? Note them.
